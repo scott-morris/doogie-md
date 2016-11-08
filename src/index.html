@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Doogie MD</title>
+	<link type="text/css" rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<header class="toolbar toolbar-header">
+		<div class="toolbar-actions">
+			<div class="btn-group">
+				<button class="btn btn-default" app-action="new-file">
+					<i class="fa fa-file-o" aria-hidden="true"></i>
+				</button>
+				<button class="btn btn-default" app-action="open-file">
+					<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+				</button>
+				<button class="btn btn-default" app-action="save-file">
+					<i class="fa fa-floppy-o" aria-hidden="true"></i>
+				</button>
+			</div>
+			<span class="title"></span>
+		</div>
+	</header>
+	<div id="wrapper">
+		<div id="editor" class="frame-wrapper"></div>
+		<div id="renderer" class="frame-wrapper markdown-body"></div>
+	</div>
+	<script>
+	require("./app.js")(window)
+	</script>
+</body>
+
+</html>
