@@ -19,6 +19,7 @@ class Editor {
 
 		this.editor.setTheme("ace/theme/monokai")
 		this.session.setMode("ace/mode/markdown")
+		this.session.setUseWrapMode(true)
 	}
 
 	onChange (fn) {

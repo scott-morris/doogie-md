@@ -1,6 +1,7 @@
 @import "../lib/photon/css/photon.css";
 @import "../node_modules/github-markdown-css/github-markdown.css";
-@import "../node_modules/highlight.js/styles/githubcss";
+@import "../node_modules/highlight.js/styles/github.css";
+@import "../node_modules/mermaid/dist/mermaid.css";
 @import "../node_modules/font-awesome/css/font-awesome.css";
 
 #wrapper {

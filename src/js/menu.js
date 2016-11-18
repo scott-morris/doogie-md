@@ -204,15 +204,34 @@ const getMenuOptions = (app) => {
 	]
 }
 
-module.exports = (app) => {
-	let template = getMenuOptions(app)
+module.exports = {
+	init: (app) => {
+		let template = getMenuOptions(app)
 
-	if (process.platform === 'darwin') {
-		template = updateMenuForMac(template)
+		if (process.platform === 'darwin') {
+			template = updateMenuForMac(template)
+		}
+
+		let menu = app.menu = Menu.buildFromTemplate(template)
+		Menu.setApplicationMenu(menu)
+
+		app.on("file-name-change", () => {
+			let header = document.querySelector(".toolbar .toolbar-actions .title")
+			header.innerHTML = app.fileName
+		})
+
+		let appBtns = document.querySelectorAll("button[app-action]")
+		appBtns.forEach((btn) => {
+			btn.addEventListener("click", (event) => {
+				let target = event.target
+				if (target.tagName !== "BUTTON" && target.parentElement.tagName === "BUTTON") {
+					target = target.parentElement
+				}
+
+				if (target.tagName === "BUTTON") {
+					app.trigger(target.getAttribute("app-action"))
+				}
+			})
+		})
 	}
-
-	let menu = Menu.buildFromTemplate(template)
-	Menu.setApplicationMenu(menu)
-
-	return menu
 }

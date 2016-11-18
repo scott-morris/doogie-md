@@ -32,12 +32,12 @@ const saveFileAs = (contents) => {
 			fs.writeFileSync(dialogResp, contents, "utf8", (err) => {
 				if (err) {
 					reject(err)
-				} else {
-					resolve({
-						fileName: dialogResp,
-						contents
-					})
 				}
+			})
+
+			resolve({
+				fileName: dialogResp,
+				contents
 			})
 		} else {
 			reject("Dialog cancelled")
@@ -54,12 +54,12 @@ const saveFile = (contents, fileName = "") => {
 		fs.writeFileSync(fileName, contents, "utf8", (err) => {
 			if (err) {
 				reject (err)
-			} else {
-				resolve({
-					fileName,
-					contents
-				})
 			}
+		})
+
+		resolve({
+			fileName,
+			contents
 		})
 	})
 }
@@ -71,7 +71,33 @@ const saveHTML = (el) => {
 	saveFile(html)
 }
 
+const init = (app) => {
+	app.on("open-file", () => {
+		openFile().then((results) => {
+			app.fileName = results.fileName
+			app.editorContents = results.contents
+		})
+	})
+
+	app.on("save-file", () => {
+		saveFile(app.editorContents, app.fileName).then((results) => {
+			app.fileName = results.fileName
+		})
+	})
+
+	app.on("save-file-as", () => {
+		saveFileAs(app.editorContents).then((results) => {
+			app.fileName = results.fileName
+		})
+	})
+
+	app.on("close-file", () => {
+		app.fileName = app.editorContents = ""
+	})
+}
+
 module.exports = {
+	init,
 	openFile,
 	saveFile,
 	saveFileAs,
